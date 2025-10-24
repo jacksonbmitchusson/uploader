@@ -6,9 +6,13 @@ base_path = '/home/onaquest/server-output'
 
 @app.route('/list') # return current list of all images
 def get_list():
-    combined_list = os.listdir(f'{base_path}/images0') + os.listdir(f'{base_path}/images1')
-    list = [[file, os.path.getsize(f'{base_path}/{file}')] for file in combined_list]
-    return jsonify(list)
+    lists = [
+        [
+            [file, os.path.getsize(f'{base_path}/{file}')] 
+            for file in os.listdir(f'{base_path}/images{id}')] 
+        for id in range(2)]
+
+    return jsonify(lists[0] + lists[1])
 
 # client will compare its list of images to what it needs and begin making requests 
 @app.route('/images<int:id>/<string:date_str>') # request specific image
