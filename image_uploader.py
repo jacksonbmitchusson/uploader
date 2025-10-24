@@ -1,15 +1,16 @@
-#import flask
+from flask import Flask, abort, send_from_directory, jsonify
 import os
 
+app = Flask(__name__)
 base_path = '/home/onaquest/server-output'
-image_sources = [f'{base_path}/images0', f'{base_path}/images1']
 
-@whatever('/list') # return current list of all images
+@app.route('/list') # return current list of all images
 def get_list():
-    list = [(file, os.path.getsize(f'{output_path}{id}/{file}')) for file in os.listdir(f'{output_path}{id}')]
-    #return in some way 
+    combined_list = os.listdir(f'{base_path}/images0') + os.listdir(f'{base_path}images1')
+    list = [[file, os.path.getsize(f'{base_path}')] for file in combined_list]
+    return jsonify(list)
 
 # client will compare its list of images to what it needs and begin making requests 
-@whatever('/images<int:id>/<string:date_str>.png') # request specific image
+@app.route('/images<int:id>/<string:date_str>') # request specific image
 def get_image(date_str, id):
-    
+    return send_from_directory(f'{base_path}/images{id}', f'{date_str}.png')
