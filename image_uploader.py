@@ -14,3 +14,7 @@ def get_list():
 @app.route('/images<int:id>/<string:date_str>') # request specific image
 def get_image(date_str, id):
     return send_from_directory(f'{base_path}/images{id}', f'{date_str}.png')
+
+if __name__ == '__main__':
+    print('starting...')
+    app.run(host='0.0.0.0', port=6767)
