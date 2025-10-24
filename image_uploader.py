@@ -8,7 +8,7 @@ base_path = '/home/onaquest/server-output'
 def get_list():
     lists = [
         [
-            [file, os.path.getsize(f'{base_path}/{file}')] 
+            [file, os.path.getsize(f'{base_path}/images/{id}/{file}')] 
             for file in os.listdir(f'{base_path}/images{id}')] 
         for id in range(2)]
 
