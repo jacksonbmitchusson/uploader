@@ -12,7 +12,7 @@ def get_list():
             for file in os.listdir(f'{base_path}/images{id}')] 
         for id in range(2)]
 
-    return jsonify(lists[0] + lists[1])
+    return jsonify({'0': lists[0], '1': lists[1]})
 
 # client will compare its list of images to what it needs and begin making requests 
 @app.route('/images<int:id>/<string:date_str>') # request specific image
